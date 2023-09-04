@@ -1,0 +1,8 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+web:
+  pdf:
+    service:
+      url: http://localhost:3333

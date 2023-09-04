@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.30.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: redact
+  name: redact
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      io.kompose.service: redact
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.30.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/cwk-i-vjosashalasahiti-second-default: "true"
+        io.kompose.service: redact
+    spec:
+      containers:
+        - env:
+            - name: eureka.client.serviceUrl.defaultZone
+              value: http://eureka:8761/eureka/
+            - name: eureka.instance.preferIPAddress
+              value: "true"
+          image: redact
+          name: redact
+          ports:
+            - containerPort: 2222
+              hostPort: 2222
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}
